@@ -11,13 +11,19 @@ export const getPosts = (req,res) => {
 })
 }
 export const getPost = (req,res) => {
-  res.json("this is added")
+const q = "SELECT `username`, `title`, `desc`, p.img AS postImg, u.img AS userImg, `cat`, `date` FROM users u JOIN posts p ON u.id = p.uid WHERE p.id=?"
+
+db.query(q,[req.params.id],(err,data) => {
+  if(err) return res.json(err)
+  return res.status(200).json(data[0])
+})
 }
 export const addPost = (req,res) => {
   res.json("this is added")
 }
 export const deletePost = (req,res) => {
-  res.json("this is added")
+const token = req.cookies.access_token
+if(!token) return res.status(401).json("Not Authenticated!")
 }
 export const updatePost = (req,res) => {
   res.json("this is added")
